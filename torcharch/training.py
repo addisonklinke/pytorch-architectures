@@ -8,6 +8,28 @@ from .data import create_loaders
 
 def train(model, dataset, save_dir, epochs, batch_size, criterion, learning_rate, optimizer,
           val_split=0.05, frequency=10, anneal=False, patience=2):
+    """Train PyTorch model on given dataset
+
+    :param torch.nn model: Trainable model object
+    :param torch.utils.data.Dataset dataset: Full dataset whose __getitem__
+        method should return a tuple of ``(input, target)`` tensors which
+        are compatible will both the model and loss criterion
+    :param str save_dir: Directory to save checkpoint models
+    :param int epochs: Number of epochs to train for
+    :param int batch_size: Number of samples per batch
+    :param str or torch.nn criterion: Name of loss criterion class or a pre-
+        initialized loss object from the ``torch.nn`` module
+    :param float learning_rate: Used if ``optimizer`` is a string instance,
+        otherwise the optimizer object's learning rate will govern
+    :param str or torch.optim optimizer: Name of optimizer class or a pre-
+        initialized object from the ``torch.optim`` module
+    :param float val_split: Percent of ``dataset`` to reserve for validation
+    :param int frequency: Number of batches to print progress message
+    :param bool anneal: Drop the learning rate when validation cost plateaus
+    :param int patience: Number of epochs to wait before dropping learning
+        rate. Has no effect if ``anneal = False``
+    :return: None
+    """
 
     # Setup dataloaders and model
     train_loader, val_loader = create_loaders(dataset, batch_size, val_split)
