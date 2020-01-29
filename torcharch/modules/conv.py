@@ -13,17 +13,24 @@ class SpatialPyramidPooling(nn.Module):
         Each element must be a perfect square in order to equally divide the
         pools across the feature map. Default corresponds to the original
         paper's implementation
+    :param str mode: Specifies the type of pooling, either max or avg
     """
 
-    def __init__(self, num_pools=[1, 4, 16]):
+    def __init__(self, num_pools=[1, 4, 16], mode='max'):
         super(SpatialPyramidPooling, self).__init__()
         self.name = 'SpatialPyramidPooling'
+        if mode == 'max':
+            pool_func = nn.AdaptiveMaxPool2d
+        elif mode == 'avg':
+            pool_func = nn.AdaptiveAvgPool2d
+        else:
+            raise NotImplementedError(f"Unknown pooling mode '{mode}', expected 'max' or 'avg'")
         self.pools = []
         for p in num_pools:
             side_length = sqrt(p)
             if not side_length.is_integer():
                 raise ValueError(f'Bin size {p} is not a perfect square')
-            self.pools.append(nn.AdaptiveMaxPool2d(int(side_length)))
+            self.pools.append(pool_func(int(side_length)))
 
     def forward(self, feature_maps):
         """Pool feature maps at different bin levels and concatenate
