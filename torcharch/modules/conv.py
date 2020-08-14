@@ -25,7 +25,7 @@ class SpatialPyramidPooling(nn.Module):
             pool_func = nn.AdaptiveAvgPool2d
         else:
             raise NotImplementedError(f"Unknown pooling mode '{mode}', expected 'max' or 'avg'")
-        self.pools = []
+        self.pools = nn.ModuleList([])
         for p in num_pools:
             side_length = sqrt(p)
             if not side_length.is_integer():
