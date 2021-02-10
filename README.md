@@ -19,3 +19,7 @@ The following list has either some or all of its architecture components and/or 
 [Spatial Pyramid Pooling in Deep Convolutional Networks for Visual Recognition](https://arxiv.org/pdf/1406.4729.pdf)
 
 * `modules.conv.SpatialPyramidPooling`
+
+[Feature Pyramid Networks for Object Detection](https://arxiv.org/pdf/1612.03144.pdf)
+
+* `modules.conv.FeaturePyramid`
