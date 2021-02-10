@@ -82,14 +82,14 @@ class TensorSpec:
         else:
             raise NotImplementedError(f'schema must be int or list[DimensionSize], got {type(schema)}')
 
-    def matches(self, other):
+    def matches(self, other, require_dtype=True, require_device=True):
 
         # Start with simple disqualifications based on type, shape, and/or device
         if not isinstance(other, torch.Tensor):
             raise ValueError(f'other must be Tensor, got {type(other)}')
-        if other.dtype != self.dtype:
+        if require_dtype and other.dtype != self.dtype:
             return False
-        if other.device != self.device:
+        if require_device and other.device != self.device:
             return False
         if len(other.shape) != self.rank:
             return False
