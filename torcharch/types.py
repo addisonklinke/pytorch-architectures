@@ -66,6 +66,31 @@ class MinDimension(DimensionSize):
 class TensorSpec:
 
     def __init__(self, schema, dtype=torch.float32, device='cpu'):
+        """Initialize a tensor specification
+
+        :param int or list[DimensionSize] schema: Length defines the rank
+            (i.e. number of dimensions) of the tensor. Any provided
+            ``DimensionSize`` elements define the specifics of each dimension.
+            For instance, the spec for an ImageNet 224px square batch of
+            images would...
+
+                * Follow ``(N, C, W, H)`` convention
+                * Allow any batch size
+                * Require 3 channels
+                * Require 224 pixel width and height
+
+            Translating this into ``DimensionSize`` elements would look like
+
+                [
+                    AnyDimension(),
+                    FixedDimension(3),
+                    FixedDimension(224),
+                    FixedDimension(224),
+                ]
+
+        :param torch.dtype dtype: Required data type of the tensor
+        :param str or torch.device device: Device tensor should be on
+        """
 
         # Check dtype and device
         if not isinstance(dtype, torch.dtype):
@@ -92,6 +117,13 @@ class TensorSpec:
             raise NotImplementedError(f'schema must be int or list[DimensionSize], got {type(schema)}')
 
     def matches(self, other, require_dtype=True, require_device=True):
+        """Determine whether a 3rd party tensor matches this class' spec
+
+        :param torch.tensor other: To validate
+        :param bool require_dtype: Whether to require the same dtype
+        :param bool require_device: Whether to require the same device
+        :return bool: Whether or not all spec items match
+        """
 
         # Start with simple disqualifications based on type, shape, and/or device
         if not isinstance(other, torch.Tensor):
