@@ -13,6 +13,15 @@ class DimensionSize(ABC):
         raise NotImplementedError
 
 
+class AnyDimension(DimensionSize):
+
+    def __init__(self):
+        super(AnyDimension, self).__init__()
+
+    def matches(self, value):
+        return True
+
+
 class DimensionRange(DimensionSize):
 
     def __init__(self, low, high):
