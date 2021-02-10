@@ -2,24 +2,23 @@
 
 PyTorch implementations of research paper model architectures
 
-## Module Structure
+## Motivation
 
-The `torcharch` package is divided into the following submodules. 
-Both `models` an `modules` are further divided into broad categories (i.e. convolutional, recurrent, etc)
+Increasingly machine learning research papers have provided accompanying code on Github.
+However, these repositories can often be rather monolithic making it difficult to re-purpose components of the
+architecture for a new use-case.
+In contrast, `torcharch` focuses strictly on architecture *components* rather than complete end-to-end models.
+The goal is to share generic designs that can be easily re-used.
 
-* **models:** Complete architecture implementations
-* **modules:** Helper components of various architectures
-* **data:** Utility functions and full dataset loaders
-* **training:** Execute trainings and save model weights
 
 ## Implemented Papers
 
-The following list has either some or all of its architecture components and/or datasets implmeneted
+The following list has either some or all of its architecture components implemented
 
 [Spatial Pyramid Pooling in Deep Convolutional Networks for Visual Recognition](https://arxiv.org/pdf/1406.4729.pdf)
 
-* `modules.conv.SpatialPyramidPooling`
+* `conv.SpatialPyramidPooling`
 
 [Feature Pyramid Networks for Object Detection](https://arxiv.org/pdf/1612.03144.pdf)
 
-* `modules.conv.FeaturePyramid`
+* `conv.FeaturePyramid`
